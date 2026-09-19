@@ -26,7 +26,7 @@ describe('isClassInstance', () => {
 		// `item.constructor.name` read throws on it. It's a legitimate,
 		// sometimes-used pattern (e.g. a "safe dictionary" specifically meant to
 		// avoid prototype-chain surprises), and should be treated as plain data.
-		const nullProto = Object.create(null);
+		let nullProto = Object.create(null);
 		nullProto.foo = 'bar';
 		expect(() => isClassInstance(nullProto)).not.toThrow();
 		expect(isClassInstance(nullProto)).toBe(false);
@@ -43,14 +43,14 @@ describe('isClassInstance', () => {
 
 describe('deepClone / deepMerge with null-prototype values', () => {
 	it('deepClone does not throw on a null-prototype object', () => {
-		const nullProto = Object.create(null);
+		let nullProto = Object.create(null);
 		nullProto.foo = 'bar';
 		expect(() => deepClone(nullProto)).not.toThrow();
 		expect(deepClone(nullProto)).toEqual({ foo: 'bar' });
 	});
 
 	it('deepMerge does not throw when a null-prototype object appears as a nested value', () => {
-		const nullProtoSettings = Object.create(null);
+		let nullProtoSettings = Object.create(null);
 		nullProtoSettings.theme = 'dark';
 
 		const target = { settings: { theme: 'light', extra: true } };
